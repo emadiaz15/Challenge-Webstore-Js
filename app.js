@@ -1,61 +1,77 @@
-// app.js
+// Cuando el documento HTML esté completamente cargado, obtener las categorías y mostrar todos los productos
 document.addEventListener('DOMContentLoaded', () => {
     fetchCategories();
-    loadCartFromLocalStorage();
+    loadCartFromStorage();
 });
 
-// Fetch categories from the API and display them
+// Obtener categorías desde la API y mostrarlas
 async function fetchCategories() {
     try {
+        // Obtener categorías desde la API
         const response = await fetch('https://fakestoreapi.com/products/categories');
         const categories = await response.json();
 
+        // Obtener el elemento de la lista de categorías
         const categoriesList = document.getElementById('categories');
+        categoriesList.innerHTML = '';
+        // Crear elementos de lista para cada categoría y añadirlos a la lista de categorías
         categories.forEach(category => {
             const li = document.createElement('li');
-            li.textContent = category;
-            li.classList.add('nav-item', 'nav-link', 'text-dark');
-            li.addEventListener('click', () => fetchProductsByCategory(category));
+            li.classList.add('nav-item');
+            const a = document.createElement('a');
+            a.classList.add('nav-link');
+            a.href = '#';
+            a.textContent = category;
+            a.addEventListener('click', () => fetchProductsByCategory(category));
+            li.appendChild(a);
             categoriesList.appendChild(li);
         });
     } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error('Error obteniendo categorías:', error);
     }
 }
 
-// Fetch products by category and display them
+// Obtener productos por categoría y mostrarlos
 async function fetchProductsByCategory(category) {
     try {
+        // Obtener productos para la categoría seleccionada
         const response = await fetch(`https://fakestoreapi.com/products/category/${category}`);
         const products = await response.json();
 
+        // Obtener el elemento de la lista de productos
         const productList = document.getElementById('product-list');
-        productList.innerHTML = ''; // Clear previous products
+        productList.innerHTML = '';
+        // Crear grupo de tarjetas de productos y añadirlas a la lista de productos
+        const cardGroup = document.createElement('div');
+        cardGroup.classList.add('card-group');
         products.forEach(product => {
-            const productDiv = document.createElement('div');
-            productDiv.classList.add('product', 'card', 'm-3');
-            productDiv.style.width = '18rem';
-            productDiv.innerHTML = `
+            const productCard = document.createElement('div');
+            productCard.classList.add('card');
+            productCard.innerHTML = `
                 <img src="${product.image}" class="card-img-top" alt="${product.title}">
                 <div class="card-body">
                     <h5 class="card-title">${product.title}</h5>
+                    <p class="card-text">${product.description}</p>
                     <p class="card-text">$${product.price}</p>
-                    <button class="btn btn-primary" onclick="fetchProductDetail(${product.id})">View Details</button>
+                    <button class="btn btn-primary" onclick="fetchProductDetail(${product.id})">Ver Detalles</button>
                 </div>
             `;
-            productList.appendChild(productDiv);
+            cardGroup.appendChild(productCard);
         });
+        productList.appendChild(cardGroup);
     } catch (error) {
-        console.error(`Error fetching products for category ${category}:`, error);
+        console.error(`Error obteniendo productos para la categoría ${category}:`, error);
     }
 }
 
-// Fetch product detail and display it
+// Obtener detalles del producto y mostrarlos
 async function fetchProductDetail(productId) {
     try {
+        // Obtener detalles del producto desde la API
         const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
         const product = await response.json();
 
+        // Obtener el elemento de detalles del producto
         const productDetail = document.getElementById('product-detail');
         productDetail.innerHTML = `
             <div class="card">
@@ -64,48 +80,51 @@ async function fetchProductDetail(productId) {
                     <h5 class="card-title">${product.title}</h5>
                     <p class="card-text">${product.description}</p>
                     <p class="card-text">$${product.price}</p>
-                    <button class="btn btn-success" onclick="addToCart(${product.id}, '${product.title}', ${product.price})">Add to Cart</button>
+                    <button class="btn btn-success" onclick="addToCart(${product.id}, '${product.title}', ${product.price})">Añadir al Carrito</button>
                 </div>
             </div>
         `;
         productDetail.classList.remove('hidden');
     } catch (error) {
-        console.error('Error fetching product detail:', error);
+        console.error('Error obteniendo detalles del producto:', error);
     }
 }
 
-// Cart array to store added products
+// Array del carrito para almacenar productos añadidos
 let cart = [];
 
-// Load cart from localStorage
-function loadCartFromLocalStorage() {
-    const storedCart = localStorage.getItem('cart');
+// Cargar carrito desde localStorage y sessionStorage
+function loadCartFromStorage() {
+    const storedCart = localStorage.getItem('cart') || sessionStorage.getItem('cart');
     if (storedCart) {
         cart = JSON.parse(storedCart);
         updateCart();
     }
 }
 
-// Add a product to the cart
+// Añadir un producto al carrito
 function addToCart(id, title, price) {
     cart.push({ id, title, price });
-    saveCartToLocalStorage();
+    saveCartToStorage();
     updateCart();
-    alert('Product added to cart!');
+    alert('Producto añadido al carrito!');
 }
 
-// Save cart to localStorage
-function saveCartToLocalStorage() {
+// Guardar carrito en localStorage y sessionStorage
+function saveCartToStorage() {
     localStorage.setItem('cart', JSON.stringify(cart));
+    sessionStorage.setItem('cart', JSON.stringify(cart));
 }
 
-// Update and display the cart
+// Actualizar y mostrar el carrito
 function updateCart() {
+    // Obtener los elementos del carrito y el total del carrito
     const cartItems = document.getElementById('cart-items');
     const cartTotal = document.getElementById('cart-total');
     cartItems.innerHTML = '';
 
     let total = 0;
+    // Crear elementos de lista para cada producto en el carrito y añadirlos a los elementos del carrito
     cart.forEach(item => {
         const li = document.createElement('li');
         li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
@@ -118,6 +137,7 @@ function updateCart() {
         total += item.price;
     });
 
+    // Actualizar el total del carrito
     cartTotal.textContent = total.toFixed(2);
     document.getElementById('cart').classList.remove('hidden');
 }
