@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Fake Store</title>
+        <!-- Bootstrap CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/core-style.css">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1>Fake Store</h1>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Fake Store</a>
+                <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <ul id="categories" class="nav nav-pills"></ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div id="product-list" class="container"></div>
+        <div id="product-detail" class="container hidden"></div>
+        <div id="cart"
+            class="fixed-top end-0 p-3 bg-light border rounded hidden"
+            style="width: 300px;">
+            <h2>Shopping Cart</h2>
+            <ul id="cart-items" class="list-group"></ul>
+            <p>Total: $<span id="cart-total">0.00</span></p>
+        </div>
+
+        <!-- jQuery and Bootstrap JS -->
+        <script src="js/jquery-2.2.4.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>
