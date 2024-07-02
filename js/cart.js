@@ -1,3 +1,5 @@
+// cart.js
+
 // Variable para almacenar los productos del carrito
 let cart = [];
 
@@ -31,7 +33,7 @@ function saveCartToStorage() {
 
 // Función para actualizar la visualización del carrito
 function updateCart() {
-    const cartItems = document.getElementById('cart-items');
+    const cartItems = document.getElementById('cart-list');
     const cartTotal = document.getElementById('cart-total');
     cartItems.innerHTML = '';
 
@@ -58,6 +60,7 @@ function updateCart() {
 
     cartTotal.textContent = total.toFixed(2);
     document.getElementById('cart').classList.remove('hidden');
+    document.getElementById('cart').scrollIntoView(); // Añadir esta línea
 }
 
 // Función para eliminar un producto del carrito

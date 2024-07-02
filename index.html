@@ -6,45 +6,116 @@
         <title>Webstore</title>
         <!-- Integración de Tailwind CSS -->
         <link
-            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+            href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css"
             rel="stylesheet">
+        <link rel="stylesheet" href="/css/style.css">
     </head>
-    <body class="bg-gray-100">
-        <header class="bg-blue-600 text-white p-4">
-            <div class="container mx-auto flex justify-between items-center">
-                <h1 class="text-2xl">Webstore</h1>
-                <nav class="flex space-x-4">
-                    <div class="relative">
-                        <button class="text-white hover:text-gray-300"
-                            id="categories-button">Categorías</button>
-                        <div id="categories"
-                            class="absolute left-0 mt-2 w-48 bg-white text-black shadow-lg rounded hidden">
-                            <!-- Las categorías se cargarán dinámicamente -->
-                        </div>
-                    </div>
-                    <a href="/cart"
-                        class="text-white hover:text-gray-300">Carrito</a>
-                </nav>
-            </div>
-        </header>
-        <main class="container mx-auto mt-8">
-            <section
-                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- Ejemplo de producto -->
-                <div class="bg-white p-4 rounded shadow">
-                    <h2 class="text-xl font-bold">Nombre del Producto</h2>
-                    <p class="mt-2">Descripción del producto.</p>
-                    <p class="mt-2 text-lg font-semibold">$Precio</p>
-                    <button
-                        class="mt-4 bg-blue-600 text-white p-2 rounded">Agregar
-                        al Carrito</button>
+    <body>
+        <nav
+            class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+            <div
+                class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                <a href="/index.html"
+                    class="flex items-center space-x-3 rtl:space-x-reverse">
+                    <img src="https://flowbite.com/docs/images/logo.svg"
+                        class="h-8" alt="Flowbite Logo" />
+                    <span
+                        class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Webstore</span>
+                </a>
+                <button data-collapse-toggle="navbar-multi-level" type="button"
+                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                    aria-controls="navbar-multi-level" aria-expanded="false">
+                    <svg class="w-5 h-5" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 17 14">
+                        <path stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2"
+                            d="M1 1h15M1 7h15M1 13h15" />
+                    </svg>
+                </button>
+                <div class="hidden w-full md:block md:w-auto"
+                    id="navbar-multi-level">
+                    <ul
+                        class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                        <li>
+                            <a href="/index.html"
+                                class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
+                                aria-current="page">Home</a>
+                        </li>
+                        <li>
+                            <button id="dropdownNavbarLink"
+                                data-dropdown-toggle="dropdownNavbar"
+                                class="flex items-center justify-between w-full py-2 px-3 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Categoría
+                                <svg class="w-2.5 h-2.5 ms-2.5"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round" stroke-width="2"
+                                        d="m1 1 4 4 4-4" />
+                                </svg>
+                            </button>
+                            <!-- Dropdown menu -->
+                            <div id="dropdownNavbar"
+                                class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                                <ul
+                                    class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                    aria-labelledby="dropdownNavbarLink">
+                                    <!-- Aquí se cargarán las categorías dinámicamente -->
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#cart"
+                                class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round" stroke-width="2"
+                                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 6h16M5 21a1 1 0 100-2 1 1 0 000 2zm14 0a1 1 0 100-2 1 1 0 000 2z" />
+                                </svg>
+                                <span
+                                    class="text-gray-900 dark:text-white">Carrito</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
+            </div>
+        </nav>
+        <main class="container mx-auto mt-8">
+            <section id="products" class="mt-8">
+                <h2 class="text-2xl font-semibold mb-4">Productos</h2>
+                <div id="product-list"
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </section>
+            <section id="product-details" class="mt-8 hidden">
+                <h2 class="text-2xl font-semibold mb-4">Detalle del
+                    Producto</h2>
+                <div id="product-info" class="flex flex-col items-center"></div>
+                <button id="add-to-cart"
+                    class="mt-4 bg-blue-500 text-white py-2 px-4 rounded">Añadir
+                    al Carrito</button>
+            </section>
+            <section id="cart" class="mt-8 hidden">
+                <h2 class="text-2xl font-semibold mb-4">Carrito de Compras</h2>
+                <ul id="cart-list" class="list-disc pl-5"></ul>
+                <p class="mt-4">Total: $<span id="cart-total">0.00</span></p>
+                <button onclick="clearCart()"
+                    class="mt-4 bg-red-500 text-white py-2 px-4 rounded">Vaciar
+                    Carrito</button>
             </section>
         </main>
         <footer class="bg-gray-800 text-white p-4 mt-8 text-center">
             <p>© 2024 Webstore. Todos los derechos reservados.</p>
         </footer>
-        <script src="js/main.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+        <script src="js/api.js"></script>
+        <script src="js/cart.js"></script>
+        <script src="js/product.js"></script>
         <script src="js/category.js"></script>
+        <script src="js/main.js"></script>
     </body>
 </html>
